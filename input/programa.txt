@@ -1,0 +1,6 @@
+double xyz;
+int x;
+
+x = 0;
+temp = xyz;
+a = 10;

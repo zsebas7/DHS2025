@@ -1,0 +1,8 @@
+Crear las expresiones regulares para capturar tokens de tipo:
+ 1- Enteros (positivos y negativos)
+ 2- ID (varibles y funciones)
+ 3- Palabras reservadas: if, else, for y while
+ 4- Caracterer operador: +, -, *, /, =
+ 5- Caracterer agrupacion: {, }, [, ], (, )
+ 6- Caracterer punto y coma: ;
+ 
