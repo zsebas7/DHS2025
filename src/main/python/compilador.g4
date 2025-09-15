@@ -9,11 +9,16 @@ LLA : '{' ;
 LLC : '}' ;
 PYC : ';' ;
 ASIG : '=' ;
+COMA : ',' ;
 
 NUMERO : DIGITO+ ;
 
 INT : 'int' ;
 DOUBLE : 'double' ;
+IF :    'if' ;
+ELSE :  'else' ;
+FOR :   'for' ;
+WHILE : 'while' ;
 
 ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 
@@ -38,9 +43,28 @@ instrucciones : instruccion instrucciones
 
 instruccion : asignacion
             | declaracion
+            | iif
+            | iwhile
+            | bloque
             ;
 
-declaracion : tipo ID PYC ;
+bloque : LLA instrucciones LLC ;
+
+iwhile : WHILE PA opal PC instruccion ;
+
+iif : IF PA opal PC instruccion ielse ;
+
+ielse : ELSE instruccion
+      |
+      ;
+
+ifor : FOR PA  PYC  PYC  PC instruccion ;
+
+declaracion : tipo ID listavar PYC ;
+
+listavar : COMA ID listavar
+         |
+         ;
 
 tipo : INT
      | DOUBLE
