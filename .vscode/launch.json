@@ -11,9 +11,9 @@
             // Archivo con la gramatica
             "grammar": "${file}",
             // Archivo a parsear
-            "input": "input/entrada.txt",
+            "input": "input/programa.txt",
             // Simbolo inicial
-            "startRule": "s",
+            "startRule": "programa",
             // Muestra Arbol Sintactico
             "printParseTree": true,
             "visualParseTree": true
