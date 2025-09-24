@@ -1,3 +1,6 @@
-Hola estoy probando!!!
-1 2 3 probando
-x + 45 / 12
+int r1 = a + b * c;
+int r2 = (a + b) * c;
+int r3 = a + b < c;
+int r4 = (a + b < c) == d;
+int r5 = (a < b) && (c > d);
+int r6 = (a < b) || (c > d) && (d == e);

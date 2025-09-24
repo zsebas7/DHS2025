@@ -1,27 +1,6 @@
-int x;
-int y, z;
-int a, b, c, d, e;
-
-for (y = 0; y < 10; ++y) {
-    x = 0;
-}
-
-if (a) {
-    x = a;
-}
-
-while (a) {
-    x = a;
-    y = 10;
-}
-
-while (x)
-    x = x;
-
-
-double xyz;
-int x;
-
-x = 0;
-temp = xyz;
-a = 10;
+int r1 = a + b * c;
+int r2 = (a + b) * c;
+int r3 = a + b < c;
+int r4 = (a + b < c) == d;
+int r5 = (a < b) && (c > d);
+int r6 = (a < b) || (c > d) && (d == e);
