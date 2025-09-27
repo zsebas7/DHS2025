@@ -29,6 +29,8 @@ RESTA : '-' ;
 MULT  : '*' ;
 DIV   : '/' ;
 MOD   : '%' ;
+INC   : '++';
+DEC   : '--';
 
 
 NUMERO : DIGITO+ ;
@@ -36,12 +38,15 @@ NUMERO : DIGITO+ ;
 //===================
 //Palabras reservadas
 //===================
-INT : 'int' ;
+INT    : 'int'    ;
 DOUBLE : 'double' ; 
-IF : 'if' ;
-ELSE: 'else' ;
-WHILE : 'while' ;
-FOR: 'for' ;
+VOID   : 'void'   ;
+
+IF     : 'if'    ;
+ELSE   : 'else'  ;
+WHILE  : 'while' ;
+FOR    : 'for'   ;
+RETURN : 'return';
 
 ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 
@@ -76,7 +81,12 @@ instruccion : asignacion
             | declaracion
             | iif
             | iwhile
+            | ifor
+            | ireturn
             | bloque
+            | prototipo
+            | funcion
+            | llamada PYC
             ;
 
 //bloque = {...} --> agrupa varias instrucciones
@@ -97,8 +107,38 @@ ielse : ELSE instruccion
       ;
 
 
-ifor: FOR PA PYC PYC PC instruccion ; //incompleto
+ifor: FOR PA forInicializacion PYC forCond PYC forActualizacion PC instruccion
+    | FOR PA forInicializacion PYC forCond PYC forActualizacion PC PYC 
+    ; 
 
+//inicializacion: puede ser una declaracion de tipo con varias variables o asignaciones individuales
+forInicializacion: tipo ID inic listavar // int x, y, z (CON TIPO)
+                 | expASIG listaExpASIG // x = 10, y = 20 (PARA VARIABLES YA EXISTENTES)
+                 | 
+                 ;
+//lista de asignaciones para variables existentes
+listaExpASIG: COMA expASIG listaExpASIG
+            |
+            ;
+
+//comparacion:
+//solo se puede poner una cond que se evaluará como verdadero o falso, no se pueden poner
+//condiciones separadas por coma
+forCond: opal
+       |
+       ;
+
+//actualizacion:
+//en la parte de actualizacion si se puede separar por coma
+forActualizacion: exp listaActualizacion
+                |
+                ;
+listaActualizacion: COMA exp listaActualizacion
+                  |
+                  ;
+
+
+ireturn: RETURN opal PYC;
 //============================
 //Declaraciones y asignaciones
 //============================
@@ -107,6 +147,7 @@ ifor: FOR PA PYC PYC PC instruccion ; //incompleto
 declaracion: tipo ID  inic listavar PYC ;
 tipo: INT
     | DOUBLE
+    | VOID
     ;
 
 //para poner una lista de variables en la declaracion, int x, y, z;
@@ -120,7 +161,8 @@ inic : ASIG opal
      ;
 
 //asignaciones del tipo x = opal;
-asignacion : ID ASIG opal PYC ;
+expASIG : ID ASIG opal ;
+asignacion : expASIG PYC ;
 
 //===========
 //Expresiones
@@ -167,5 +209,42 @@ t    : MULT factor t
 factor : NUMERO
        | ID
        | PA opal PC
-       | //agregar llamada a funcion
+       | llamada
+       | NOT factor //!x
+       | INC factor //++x
+       | DEC factor //--x
+       | factor INC //x++
+       | factor DEC //x--
        ;
+
+//=========
+//FUNCIONES
+//=========
+
+//prototipo de funcion
+prototipo : tipo ID PA parametros PC PYC ;
+parametros : parametro listaParametros
+           |
+           ;
+listaParametros: COMA parametro listaParametros
+               |
+               ;
+//un parametro puede ser un tipo seguido de 1 o mas IDs
+parametro: tipo ID listaID ;
+//permite varias IDs despues del primero
+listaID: COMA ID listaID
+       |
+       ;
+//llamada a la funcion
+llamada : ID PA listaArg PC ;
+listaArg: opal argumentos //permite 0 o mas argumentos f(x, y)
+        | // f()
+        ;
+argumentos: COMA opal argumentos
+          |
+          ;
+
+//declaracion
+funcion : tipo ID PA parametros PC bloque; //si o si deben tener bloque, si tienen una sola instruccion debe estar dentro del bloque
+
+

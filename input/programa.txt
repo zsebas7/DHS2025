@@ -1,6 +1,18 @@
-int r1 = a + b * c;
-int r2 = (a + b) * c;
-int r3 = a + b < c;
-int r4 = (a + b < c) == d;
-int r5 = (a < b) && (c > d);
-int r6 = (a < b) || (c > d) && (d == e);
+int funcion(int param, double otroparam);
+
+for (int x, y, z; x + 10 < 100; x++, --y){
+    funcion(y);
+}
+for(var = 3, otravar = 5;;);
+
+int test = 10, test2 = 20;
+
+int funcion(int param){
+    if (param > 10){
+        return param * 2;
+    } else {
+        while (param < 10){
+            param = param + 1;
+        }
+    }
+}
