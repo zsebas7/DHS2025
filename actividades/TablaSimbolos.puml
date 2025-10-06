@@ -1,0 +1,48 @@
+@startuml TablaSimbolos
+skinparam classAttributeIconSize 0
+hide circle
+
+class TS <<singleton>> {
+    - List<Contexto> contexto
+    + getTablaSimbolo() : TS
+    + addContexto()
+    + delContexto()
+    + addSimbolo(ID id)
+    + buscarSimbolo(string nombre) : ID
+    + buscarSimboloContexto(string nombre): ID
+}
+
+class Contexto {
+    - dict<ID> simbolos
+    + addSimbolo(ID id)
+    + buscarSimbolo(string nombre): ID
+}
+
+class ID <<abstract>> {
+    - string nombre
+    - string tipoDato
+    - bool inicializado
+    - bool usado
+    + getNombre()
+    + getTipoDato()
+    + setInicializado()
+    + getInicializado()
+    + setUsado()
+    + getUsado()
+}
+
+class Variable {
+
+}
+
+class Funcion {
+    - List<ID> args
+    - getListaArgs() : Lista<ID>
+}
+
+TS -right-> Contexto
+Contexto -right-> ID
+ID <|-- Variable
+ID <|-- Funcion
+
+@enduml

@@ -10,5 +10,15 @@
     "antlr4.debug": {
     "visualParseTreeHorizontal": false,
     "visualParseTreeClustered": true
+    },
+    
+    "python.analysis.exclude": [
+        "**/compiladorLexer.py",
+        "**/compiladorParser.py"
+    ],
+    "files.exclude": {
+        "**/compiladorLexer.py": true,
+        "**/compiladorParser.py": true
     }
+
 }
